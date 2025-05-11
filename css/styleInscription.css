@@ -1,0 +1,13 @@
+.invalide
+{
+    color: red;
+}
+.valide
+{
+    color: green;
+}
+
+#mdpPasBon
+{
+    display: none;
+}
