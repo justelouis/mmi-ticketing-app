@@ -10,15 +10,15 @@
         <legend>Se connecter</legend>
         <form action="actions/connexion/connexion.php" method="post">
             <label for="mail">Adresse mail</label>
-            <input type="email" name="mail" id="mail">
+            <input type="email" name="mail" id="mail" required pattern=".+@univ-rouen.fr" placeholder="prenom.nom@univ-rouen.fr" autofocus>
 
             <label for="mdp">Mot de passe</label>
-            <input type="password" name="mdp" id="mdp">
+            <input type="password" name="mdp" id="mdp" required>
 
             <input type="submit" value="Se connecter">
         </form>
     </fieldset>
-
+    <a href="index.php">Revenir a l'accueil</a>
     <?php
         if(isset($_GET["result"]))
         {

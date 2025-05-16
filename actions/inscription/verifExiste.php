@@ -1,20 +1,29 @@
 <?php
-require("../database.php");
 
-$mail = htmlentities($_POST["mail"]);
-
-$check = $bdd->query("SELECT COUNT(*) FROM $prefixeTable"."utilisateur WHERE email = '$mail' ");
-
-if($check->fetchColumn() > 0)
+if(!empty($_POST))
 {
-    header("Location: ../../inscription.php?exist=true");
+    require("../database.php");
+
+    $mail = htmlspecialchars($_POST["mail"]);
+
+    $check = $bdd->query("SELECT * FROM $prefixeTable"."utilisateur WHERE email = '$mail' ");
+
+    if($check->rowCount() > 0)
+    {
+        header("Location: ../../inscription.php?error=1");
+    }else
+    {
+        $_SESSION["nom"] = htmlspecialchars($_POST["nom"]);
+        $_SESSION["prenom"] = htmlspecialchars($_POST["prenom"]);
+        $_SESSION["mail"] = htmlspecialchars($_POST["mail"]);
+        $_SESSION["mdp"] = password_hash($_POST["mdp"],PASSWORD_DEFAULT);
+        
+        header("Location: verifMail.php");
+    }
 }else
 {
-    $_SESSION["nom"] = htmlentities($_POST["nom"]);
-    $_SESSION["prenom"] = htmlentities($_POST["prenom"]);
-    $_SESSION["mail"] = htmlentities($_POST["mail"]);
-    $_SESSION["mdp"] = password_hash($_POST["mdp"],PASSWORD_DEFAULT);
-    
-    header("Location: verifMail.php");
+    header("Location: inscription.php");
 }
 
+
+?>

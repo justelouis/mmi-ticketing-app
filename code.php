@@ -10,7 +10,14 @@ session_start();
 </head>
 <body>
     <?php 
-        echo $_SESSION["mail"]; 
+        if(isset($_SESSION["mail"]))
+        {
+            echo $_SESSION["mail"]; 
+        }else
+        {
+            header("Location: inscription.php");
+        }
+
         if(isset($_SESSION["inscripTent"]))
         {
             ?>

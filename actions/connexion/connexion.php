@@ -1,29 +1,37 @@
 <?php
 
-require("../database.php");
-
-$mail = htmlentities($_POST["mail"]);
-$mdp = htmlentities($_POST["mdp"]);
-
-$checkExiste = $bdd->query("SELECT * FROM $prefixeTable"."utilisateur WHERE email = '$mail' ");
-$infos = $checkExiste->fetch();
-
-if($checkExiste->rowCount() > 0)
+if(!empty($_POST))
 {
-    if(password_verify($mdp, $infos["motDePasse"]))
+    require("../database.php");
+
+    $mail = htmlspecialchars($_POST["mail"]);
+    $mdp = htmlspecialchars($_POST["mdp"]);
+
+    $checkExiste = $bdd->query("SELECT * FROM $prefixeTable"."utilisateur WHERE email = '$mail' ");
+    $infos = $checkExiste->fetch();
+
+    if($checkExiste->rowCount() > 0)
     {
-        $_SESSION["auth"] = true;
-        $_SESSION["nom"] = $infos["nom"];
-        $_SESSION["prenom"] = $infos["prenom"];
-        $_SESSION["mail"] = $infos["email"];
-    }else   //mdp incorrect
+        if(password_verify($mdp, $infos["motDePasse"]))
+        {
+            $_SESSION["auth"] = true;
+            $_SESSION["id"] = $infos["idUtilisateur"];
+            $_SESSION["nom"] = $infos["nom"];
+            $_SESSION["prenom"] = $infos["prenom"];
+            $_SESSION["mail"] = $infos["email"];
+        }else   //mdp incorrect
+        {
+            header("Location: ../../connection.php?result=2");
+        }
+    }else   //compte n existe pas
     {
-        header("Location: ../../connection.php?result=2");
+        header("Location: ../../connection.php?result=1");
     }
-}else   //compte n existe pas
+}else
 {
-    header("Location: ../../connection.php?result=1");
+    header("Location : ../../connection.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,12 +42,8 @@ if($checkExiste->rowCount() > 0)
     <title>Connexion réussi</title>
 </head>
 <body>
-    <p>Bonjour <?=$_SESSION["prenom"]?>, vous êtes connecté, vous allez êtes redirigés dans quelque seconde</p>
+    <p>Bonjour <?=$_SESSION["prenom"]?>, vous êtes connecté</p>
 
-    <script>
-        setTimeout(() => {
-            document.location = "../../index.php";
-        }, 5000);
-    </script>
+    <a href="../../index.php">Retour a l'accueil</a>
 </body>
 </html>

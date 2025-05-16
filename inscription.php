@@ -8,14 +8,27 @@
 </head>
 <body>
     <?php
-        if(isset($_GET["exist"]))
+        if(isset($_GET["error"]))
         {
-            echo "Cet email est déjà utilisé";
+            switch ($_GET["error"]) {
+                case 1:
+                    echo "Cet email est déjà utilisé";
+                    break;
+                
+                case 2:
+                    echo "L'adresse mail n'est pas valide";
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+            
         }
     ?>
     <fieldset>
         <legend>Inscription</legend>
-        <form action="actions/inscription/verifExiste.php" method="post" onsubmit="VerifMdp(event)">
+        <form action="actions/inscription/verifExiste.php" method="post" onsubmit="VerifMdp(event)" >
             <label for="nom">Nom</label>
             <input type="text" name="nom" id="nom" required autofocus>
 
@@ -23,7 +36,7 @@
             <input type="text" name="prenom" id="prenom" required>
 
             <label for="mail">mail</label>
-            <input type="mail" name="mail" id="mail" required>
+            <input type="mail" name="mail" id="mail" required pattern=".+@univ-rouen.fr" placeholder="prenom.nom@univ-rouen.fr">
 
             <label for="mdp">password</label>
             <input type="password" name="mdp" id="mdp" required oninput="TestRobustesse(this.value)">
@@ -38,6 +51,7 @@
             <input type="submit" value="S'inscrire">
         </form>
     </fieldset>
-    <script src="js/scripInscription.js"></script>
+    <a href="index.php">Revenir a l'accueil</a>
+    <script src="js/scriptInscription.js"></script>
 </body>
 </html>

@@ -1,37 +1,52 @@
-<?php
-require("../database.php");
+<?
 
-if($_POST["code"] == $_SESSION["code"])
+if(!empty($_POST))
 {
-    $inscription = $bdd->prepare("INSERT INTO $prefixeTable"."utilisateur(nom, prenom, motDePasse, email) VALUES (:nom, :prenom, :mdp, :email)");
-    $inscription->execute([
-        "nom" => $_SESSION['nom'],
-        "prenom" => $_SESSION['prenom'],
-        "mdp" => $_SESSION['mdp'],
-        "email" => $_SESSION['mail']
-    ]);
+    require("../database.php");
 
-    echo "inscription validé";
-
-    $_SESSION["auth"] = true;
-    
-    unset($_SESSION["mdp"]);
-}else
-{
-    if(isset($_SESSION["inscripTent"]))
+    if($_POST["code"] == $_SESSION["code"])
     {
-        $_SESSION["inscripTent"]++;
-        if($_SESSION["inscripTent"] >= 3)
-        {
-            unset($_SESSION['inscripTent']);
-            header("Location: verifMail.php");
-        }
+        $inscription = $bdd->prepare("INSERT INTO $prefixeTable"."utilisateur(nom, prenom, motDePasse, email) VALUES (:nom, :prenom, :mdp, :email)");
+        $inscription->execute([
+            "nom" => $_SESSION['nom'],
+            "prenom" => $_SESSION['prenom'],
+            "mdp" => $_SESSION['mdp'],
+            "email" => $_SESSION['mail']
+        ]);
+
+        echo "inscription validé";
+
+        $_SESSION["auth"] = true;
+        
+        unset($_SESSION["mdp"]);
+
+        $getId = $bdd->prepare("SELECT idUtilisateur  FROM $prefixeTable"."utilisateur WHERE email = :email");
+        $getId->execute([
+            "email" => $_SESSION["mail"]
+        ]);
+
+        $_SESSION["id"] = $getId->fetch()["id"];
     }else
     {
-        $_SESSION["inscripTent"] = 1;
+        if(isset($_SESSION["inscripTent"]))
+        {
+            $_SESSION["inscripTent"]++;
+            if($_SESSION["inscripTent"] >= 3)
+            {
+                unset($_SESSION['inscripTent']);
+                header("Location: verifMail.php");
+            }
+        }else
+        {
+            $_SESSION["inscripTent"] = 1;
+        }
+        header("Location: ../../code.php");
     }
-    header("Location: ../../code.php");
+}else
+{
+    header("Location: inscription.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -42,12 +57,8 @@ if($_POST["code"] == $_SESSION["code"])
     <title>Connexion réussi</title>
 </head>
 <body>
-    <p>Bonjour <?=$_SESSION["prenom"]?>, vous êtes inscrit, vous allez êtes redirigés dans quelque seconde</p>
+    <p>Bonjour <?=$_SESSION["prenom"]?>, vous êtes inscrit</p>
 
-    <script>
-        setTimeout(() => {
-            document.location = "../../index.php";
-        }, 5000);
-    </script>
+    <a href="../../index.php">Retour a l'accueil</a>
 </body>
 </html>

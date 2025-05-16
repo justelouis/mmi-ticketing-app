@@ -3,7 +3,6 @@
 let mdpCorrect = false;
 function TestRobustesse(mdp)
 {
-    // let mdp = "test"
     let liste = document.getElementById("testRobustesse");
 
     liste.childNodes[1].className = (mdp.length >= 8)?("valide"):("invalide");  //longueur
@@ -24,4 +23,13 @@ function VerifMdp(evt)
         evt.preventDefault();
         document.getElementById("mdpPasBon").style.display = "block";
     }
+}
+
+
+function Moi()
+{
+    prenom = "Louis";
+    nom = "Cadix";
+    competences = ["Dev web", "Crea Numerique"];
+    job = ["Etudiant", "Developpeur"];
 }
