@@ -14,22 +14,32 @@
     <?php
         if(isset($_SESSION["auth"]))
         {
-            ?>
-                <a href="profil.php">Profil</a>
-                <a href="actions/connexion/deconnexion.php">Se déconnecter</a>
-            <?php
+            if($_SESSION["admin"])
+            {
+                ?>
+                    <a href="admin.php">Page admin</a>
+                    <a href="actions/connexion/deconnexion.php">déconnexion admin</a>
+                <?php
+            }else
+            {
+                ?>
+                    <a href="profil.php">Profil</a>
+                    <a href="actions/connexion/deconnexion.php">Se déconnecter</a>
+                <?php
+            }
         }else
         {
             ?>
                 <a href="inscription.php">Pour s'inscrire</a>
                 <a href="connexion.php">Se connecter</a>
+                <br>
+                <a href="connexionAdmin.php">Connexion admin</a>
+                <br>
             <?php
         }
     ?>
 
-    <br>
-    <a href="connexionAdmin.php">Connexion admin</a>
-    <br>
+    
 
     <h1>Liste Evenement</h1>
     <ul>

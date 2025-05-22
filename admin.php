@@ -56,7 +56,7 @@
             <label for="categorie">Categorie</label>
             <select name="categorie" id="categorie" required>
                 <?php
-                    $requeteCategorie = $bdd->query("SELECT * FROM categorie");
+                    $requeteCategorie = $bdd->query("SELECT * FROM $prefixeTable"."categorie");
                     $categories = $requeteCategorie->fetchAll();
 
                     foreach ($categories as $categorie) 

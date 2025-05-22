@@ -17,6 +17,8 @@ if(!empty($_POST))
         echo "inscription validé";
 
         $_SESSION["auth"] = true;
+        $_SESSION["admin"] = false;
+
         
         unset($_SESSION["mdp"]);
 

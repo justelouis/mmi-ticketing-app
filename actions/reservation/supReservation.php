@@ -4,7 +4,20 @@ require("../database.php");
 
 if(!empty($_GET))
 {
-    $supRese = $bdd->prepare("DELETE FROM reservation WHERE idReservation = :id");
+    //ajouter les place a l'evnt
+    $upPlaceEvnt = $bdd->prepare("UPDATE $prefixeTable"."evenement 
+        INNER JOIN $prefixeTable"."reservation
+        ON $prefixeTable"."evenement.idEvenement = $prefixeTable"."reservation.idEvenement
+        SET $prefixeTable"."evenement.placeDispo = $prefixeTable"."evenement.placeDispo + $prefixeTable"."reservation.nbrPlacePrise 
+        WHERE $prefixeTable"."reservation.idReservation = :id");
+
+    $upPlaceEvnt->execute([
+        "id" => $_GET["idReservation"]
+    ]);
+
+
+    //sup la resa
+    $supRese = $bdd->prepare("DELETE FROM $prefixeTable"."reservation WHERE idReservation = :id");
     $supRese->execute([
         "id" => $_GET["idReservation"]
     ]);

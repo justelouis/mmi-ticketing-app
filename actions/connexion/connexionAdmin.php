@@ -11,6 +11,7 @@
         if($requete->rowCount() > 0)
         {
             $_SESSION["admin"] = true;
+            $_SESSION["auth"] = true;
             header("Location: ../../admin.php");
 
         }else

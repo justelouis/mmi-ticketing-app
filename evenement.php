@@ -38,10 +38,58 @@
     <?php
         if(isset($_SESSION["auth"]))
         {
-            if($evnt["placeDispo"])
+            if($_SESSION["admin"])
             {
+                ?>
+                    <p>Les administrateurs ne peuvent pas réserver de place, mais peuvent <a href="actions/evenement/supEvnt.php?idEvnt=<?=$evnt["idEvenement"]?> ">supprimer un évenement</a> ou <button onclick=ChangerEtatModifMenu(true)>modifier un évenement</button></p>
 
-            
+                    <fieldset id="modifMenu">
+                        <legend>Modifier évenement</legend>
+                        <h1 onclick=ChangerEtatModifMenu(false)>X</h1>
+                        <form action="actions/evenement/modifEvnt.php" method="post">  
+                            
+                            <input type="hidden" name="idEvnt" value="<?=$evnt["idEvenement"]?>">
+                            <label for="nomEvnt">Nom de l'événement</label>
+                            <input type="text" name="nomEvnt" id="nomEvnt" required value=<?=$evnt["nom"]?>>
+
+                            <label for="description">Description de l'événement</label>
+                            <textarea name="description" id="description" required ><?=$evnt["description"]?></textarea>
+
+                            <label for="date">Date</label>
+                            <?php
+                                $datetime = date('Y-m-d\TH:i', strtotime($evnt["date"]));
+                            ?>
+                            <input type="datetime-local" name="date" id="date" required value="<?= $datetime ?>">
+
+                            <label for="lieu">lieu</label>
+                            <input type="text" name="lieu" id="lieu" required value=<?=$evnt["lieu"]?>>
+
+                            <label for="nbPlace">Nombre de places</label>
+                            <input type="number" name="nbPlace" id="nbPlace" min=1 required value=<?=$evnt["placeMax"]?>>
+
+                            <label for="categorie">Categorie</label>
+                            <select name="categorie" id="categorie" required>
+                                <?php
+                                    $requeteCategorie = $bdd->query("SELECT * FROM categorie");
+                                    $categories = $requeteCategorie->fetchAll();
+
+                                    foreach ($categories as $categorie) 
+                                    {
+                                        ?>
+                                            <option value="<?=$categorie["idCategorie"]?>" <?php if($categorie["idCategorie"]== $evnt["idCategorie"]){echo "selected";}?>>
+                                                <?=$categorie["nomCategorie"]?>
+                                            </option>
+                                        <?php
+                                    }
+                                ?>
+
+                                <input type="submit" value="Modifier l'événement">
+                        </form>
+                    </fieldset>
+                <?php
+            }
+            elseif($evnt["placeDispo"])
+            {            
     ?>
                 <button onclick="ChangerEtatMenuReservation(true)">Réserver</button>
 

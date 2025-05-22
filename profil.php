@@ -22,8 +22,8 @@ if(empty($_SESSION))
             $getReservation = $bdd->prepare("SELECT $prefixeTable"."reservation.*, $prefixeTable"."evenement.* 
                                             FROM $prefixeTable"."reservation 
                                             INNER JOIN $prefixeTable"."evenement 
-                                            ON $prefixeTable.evenement.idEvenement = $prefixeTable"."reservation.idEvenement 
-                                            WHERE idUtilisateur = :id");
+                                            ON $prefixeTable"."evenement.idEvenement = $prefixeTable"."reservation.idEvenement 
+                                            WHERE $prefixeTable"."reservation.idUtilisateur = :id");
             $getReservation->execute([ "id" => $_SESSION["id"]]);
 
             $reservations = $getReservation->fetchAll();

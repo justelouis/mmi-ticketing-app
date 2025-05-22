@@ -19,17 +19,18 @@ if(!empty($_POST))
             $_SESSION["nom"] = $infos["nom"];
             $_SESSION["prenom"] = $infos["prenom"];
             $_SESSION["mail"] = $infos["email"];
+            $_SESSION["admin"] = false;
         }else   //mdp incorrect
         {
-            header("Location: ../../connection.php?result=2");
+            header("Location: ../../connexion.php?result=2");
         }
     }else   //compte n existe pas
     {
-        header("Location: ../../connection.php?result=1");
+        header("Location: ../../connexion.php?result=1");
     }
 }else
 {
-    header("Location : ../../connection.php");
+    header("Location : ../../connexion.php");
 }
 
 ?>

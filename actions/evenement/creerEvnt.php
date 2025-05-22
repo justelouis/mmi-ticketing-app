@@ -10,7 +10,8 @@
         $placeEvnt = $_POST["nbPlace"];
         $categEvnt = $_POST["categorie"];
 
-        $insertEvnt = $bdd->prepare("INSERT INTO $prefixeTable"."evenement(nom, description ,date, lieu, placeMax, placeDispo, idCategorie) VALUES (:nom, :description,:date, :lieu, :placeMax, :placeDispo, :idCategorie)");
+        $insertEvnt = $bdd->prepare("INSERT INTO $prefixeTable"."evenement(nom, description ,date, lieu, placeMax, placeDispo, idCategorie) 
+                                    VALUES (:nom, :description,:date, :lieu, :placeMax, :placeDispo, :idCategorie)");
         $insertEvnt->execute([
             "nom"=>$nomEvnt,
             "description"=>$descEvnt,
