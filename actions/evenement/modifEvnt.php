@@ -9,10 +9,11 @@ if(!empty($_POST))
     $dateEvnt = $_POST["date"];
     $lieuEvnt = htmlspecialchars($_POST["lieu"]);
     $placeEvnt = $_POST["nbPlace"];
+    $placeResa = $_POST["placeResa"];
     $categEvnt = $_POST["categorie"];
 
     $updEvnt = $bdd->prepare("UPDATE $prefixeTable"."evenement SET nom= :nom ,description= :description , date= :date, lieu= :lieu,
-                                placeMax= :placeMax , idCategorie= :idCategorie
+                                placeMax= :placeMax , placeDispo = :placeDispo ,idCategorie= :idCategorie
                                 WHERE idEvenement = :idEvnt");
 
     $updEvnt->execute([
@@ -21,10 +22,11 @@ if(!empty($_POST))
             "date"=>$dateEvnt,
             "lieu"=>$lieuEvnt,
             "placeMax"=>$placeEvnt,
-            // "placeDispo"=>$placeEvnt,
+            "placeDispo"=>$placeEvnt - $placeResa,
             "idCategorie"=>$categEvnt,
             "idEvnt" => $_POST["idEvnt"]
         ]);
+    $updEvnt->closeCursor();
 }else
 {
     header("Location: index.php");

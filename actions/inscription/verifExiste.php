@@ -10,9 +10,11 @@ if(!empty($_POST))
 
     if($check->rowCount() > 0)
     {
+        $check->closeCursor();
         header("Location: ../../inscription.php?error=1");
     }else
     {
+        $check->closeCursor();
         $_SESSION["nom"] = htmlspecialchars($_POST["nom"]);
         $_SESSION["prenom"] = htmlspecialchars($_POST["prenom"]);
         $_SESSION["mail"] = htmlspecialchars($_POST["mail"]);

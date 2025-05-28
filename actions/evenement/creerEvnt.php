@@ -21,6 +21,7 @@
             "placeDispo"=>$placeEvnt,
             "idCategorie"=>$categEvnt
         ]);
+        $insertEvnt->closeCursor();
     }else
     {
         header("Location: ../../admin.php");

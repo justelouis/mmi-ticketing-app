@@ -15,6 +15,8 @@ if(!empty($_GET))
         "nbrPlacePrise" => $_GET["nbrPlace"],
         "id" => $_GET["idEvnt"]
     ]);
+    $changePlaceDispo->closeCursor();
+    $reservationRequete->closeCursor();
 
     header("Location: ../../profil.php");
 }else

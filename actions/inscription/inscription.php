@@ -13,6 +13,7 @@ if(!empty($_POST))
             "mdp" => $_SESSION['mdp'],
             "email" => $_SESSION['mail']
         ]);
+        $inscription->closeCursor();
 
         echo "inscription validé";
 
@@ -28,6 +29,7 @@ if(!empty($_POST))
         ]);
 
         $_SESSION["id"] = $getId->fetch()["id"];
+        $getId->closeCursor();
     }else
     {
         if(isset($_SESSION["inscripTent"]))

@@ -6,6 +6,7 @@
     <title>Connection</title>
 </head>
 <body>
+    <a href="connexionAdmin.php">Connexion admin</a>
     <fieldset>
         <legend>Se connecter</legend>
         <form action="actions/connexion/connexion.php" method="post">

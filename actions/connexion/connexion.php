@@ -8,6 +8,14 @@ if(!empty($_POST))
     $mdp = htmlspecialchars($_POST["mdp"]);
 
     $checkExiste = $bdd->query("SELECT * FROM $prefixeTable"."utilisateur WHERE email = '$mail' ");
+
+    $checkExiste = $bdd->prepare("SELECT * FROM $prefixeTable"."utilisateur WHERE email = :mail");
+    $checkExiste->execute([
+        "mail" => $mail
+    ]);
+
+
+    
     $infos = $checkExiste->fetch();
 
     if($checkExiste->rowCount() > 0)
@@ -20,12 +28,15 @@ if(!empty($_POST))
             $_SESSION["prenom"] = $infos["prenom"];
             $_SESSION["mail"] = $infos["email"];
             $_SESSION["admin"] = false;
+
+            $checkExiste->closeCursor();
         }else   //mdp incorrect
         {
             header("Location: ../../connexion.php?result=2");
         }
     }else   //compte n existe pas
     {
+        $checkExiste->closeCursor();
         header("Location: ../../connexion.php?result=1");
     }
 }else

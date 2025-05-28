@@ -9,7 +9,7 @@ if(!empty($_GET) && $_SESSION["admin"])
         "id" => $_GET["idEvnt"]
     ]);
     $infoEvnt = $reqInfoEvnt->fetch();
-
+    $reqInfoEvnt->closeCursor();
 
     //Envoi de mail au gens qui ont une résa
     $reqMail = $bdd->prepare("SELECT $prefixeTable"."utilisateur.email FROM 
@@ -22,6 +22,7 @@ if(!empty($_GET) && $_SESSION["admin"])
         "id" =>$infoEvnt["idEvenement"]
     ]);
     $mails = $reqMail->fetchAll();
+    $reqMail->closeCursor();
 
     $mailExp = "louis.cadix@univ-rouen.fr";
     $mailTxt = "Nous sommes désolé de vous informer de la suppression de l'évenement : ".$infoEvnt["nom"];
@@ -49,6 +50,7 @@ if(!empty($_GET) && $_SESSION["admin"])
     $delEvnt->execute([
         "id" => $infoEvnt["idEvenement"]
     ]);
+    $delEvnt->closeCursor();
 
 }else
 {

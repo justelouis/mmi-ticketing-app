@@ -7,55 +7,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styleNavbar.css">
+    <link rel="stylesheet" href="css/styleIndex.css">
+    <link rel="stylesheet" href="css/styleFooter.css">
     <title>SAE 203</title>
 </head>
 <body>
-
     <?php
-        if(isset($_SESSION["auth"]))
-        {
-            if($_SESSION["admin"])
+        include("includes/navbar.php");
+    ?>
+    
+    <h1>Liste Evenement</h1>
+
+    <form method="get">
+        <label for="categorieTri">Tri par categorie</label>
+        <select name="categorieTri" id="categorieTri">
+            <option value="0">Tout</option>
+            <?php
+                $requeteCategorie = $bdd->query("SELECT * FROM $prefixeTable"."categorie");
+                $categories = $requeteCategorie->fetchAll();
+                $requeteCategorie->closeCursor();
+
+                foreach ($categories as $categorie) 
+                {
+                    ?>
+                        <option value="<?=$categorie["idCategorie"]?>"><?=$categorie["nomCategorie"]?></option>
+                    <?php
+                }
+            ?>
+        </select>
+        <input type="submit" value="Filtrer">
+    </form>
+    <div id ="evntDiv">
+        <?php
+            if(isset($_GET["categorieTri"]) && $_GET["categorieTri"] != 0)  //verif si categorie select 
+            {
+                $categorieId = $_GET["categorieTri"];
+                $sqlWhere = " WHERE idCategorie = $categorieId";
+            } 
+            else 
+            {
+                $sqlWhere = "";
+            }
+            $requeteEvnt = $bdd->query("SELECT * FROM $prefixeTable"."evenement".$sqlWhere);
+            if($requeteEvnt->rowCount() == 0) //verif si pas d'evnt
             {
                 ?>
-                    <a href="admin.php">Page admin</a>
-                    <a href="actions/connexion/deconnexion.php">déconnexion admin</a>
+                <p>Aucun événement trouvé dans cette catégorie.</p>
                 <?php
             }else
             {
-                ?>
-                    <a href="profil.php">Profil</a>
-                    <a href="actions/connexion/deconnexion.php">Se déconnecter</a>
-                <?php
-            }
-        }else
-        {
+                $evnts = $requeteEvnt->fetchAll();
+                $requeteEvnt->closeCursor();
+
+                foreach ($evnts as $evnt)   //affichage des evnts
+                {
+                    ?>
+                    <div class="evnt">
+                        <a href="evenement.php?id=<?=$evnt["idEvenement"]?>">
+                            <div>
+                                <h3><?=$evnt["nom"]?></h3>
+                                <p><?=$evnt["description"]?></p>
+                                <p><strong>Date :</strong> <?=$evnt["date"]?></p>
+                                <p><strong>Lieu :</strong> <?=$evnt["lieu"]?></p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <?php
+                }
             ?>
-                <a href="inscription.php">Pour s'inscrire</a>
-                <a href="connexion.php">Se connecter</a>
-                <br>
-                <a href="connexionAdmin.php">Connexion admin</a>
-                <br>
-            <?php
-        }
-    ?>
-
-    
-
-    <h1>Liste Evenement</h1>
-    <ul>
         <?php
-            $requeteEvnt = $bdd->query("SELECT * FROM $prefixeTable"."evenement");
-            $evnts = $requeteEvnt->fetchAll();
-
-            foreach ($evnts as $evnt) 
-            {
-                ?>
-                    <li>
-                        <a href="evenement.php?id=<?=$evnt["idEvenement"]?>" ><?=$evnt["nom"]?></a>
-                    </li>
-                <?php
             }
         ?>
-    </ul>
+    </div>
+
+    <?php
+        include("includes/footer.php");
+    ?>
 </body>
 </html>

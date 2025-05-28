@@ -16,8 +16,6 @@ if(isset($_SESSION["mail"]))
         'Reply-To: '.$_SESSION["mail"]."\r\n".
         'X-Mailer: PHP'. phpversion();
 
-
-
     if(mail(
         $_SESSION["mail"],
         "Code", 

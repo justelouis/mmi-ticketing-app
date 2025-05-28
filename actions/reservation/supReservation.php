@@ -21,6 +21,9 @@ if(!empty($_GET))
     $supRese->execute([
         "id" => $_GET["idReservation"]
     ]);
+
+    $upPlaceEvnt->closeCursor();
+    $supRese->closeCursor();
 }else
 {
     header("Location: ../../index.php");

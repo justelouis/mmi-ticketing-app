@@ -1,6 +1,6 @@
 <?php
     require("actions/database.php");
-    if(!isset($_SESSION["admin"]))
+    if(!isset($_SESSION["admin"]) || !$_SESSION["admin"] )
     {
         header("Location: index.php");
     }
@@ -35,6 +35,56 @@
     </fieldset>
 
     <fieldset>
+        <legend>Modifier Catégorie</legend>
+        <form action="actions/categorie/modifCategorie.php" method="post">
+            <label for="categorieAModifier">Catégorie à modifier</label>
+            <select name="categorieAModifier" id="categorieAModifier" required>
+                <?php
+                    $requeteCategorie = $bdd->query("SELECT * FROM $prefixeTable"."categorie WHERE idCategorie > 1");   //car on peut pas modifier la categorie "sans categorie" (id=1)
+                    $categories = $requeteCategorie->fetchAll();
+                    $requeteCategorie->closeCursor();
+
+                    foreach ($categories as $categorie) 
+                    {
+                        ?>
+                            <option value="<?=$categorie["idCategorie"]?>"><?=$categorie["nomCategorie"]?></option>
+                        <?php
+                    }
+                ?>
+            </select>
+
+            <label for="nouveauNom">Nouveau nom de la catégorie</label>
+            <input type="text" name="nouveauNom" id="nouveauNom" required>
+
+            <input type="submit" value="Modifier la catégorie">
+        </form>
+    </fieldset>
+
+    <fieldset>
+        <legend>Supprimer une catégorie</legend>
+
+        <form action="actions/categorie/supprimerCategorie.php" method="post">
+            <label for="categorieASupprimer">Catégorie à supprimer</label>
+            <select name="categorieASupprimer" id="categorieASupprimer" required>
+                <?php
+                    $requeteCategorie = $bdd->query("SELECT * FROM $prefixeTable"."categorie WHERE idCategorie > 1");   //car on peut pas supprimer la categorie "sans categorie" (id=1)
+                    $categories = $requeteCategorie->fetchAll();
+                    $requeteCategorie->closeCursor();
+
+                    foreach ($categories as $categorie) 
+                    {
+                        ?>
+                            <option value="<?=$categorie["idCategorie"]?>"><?=$categorie["nomCategorie"]?></option>
+                        <?php
+                    }
+                ?>
+            </select>
+
+            <input type="submit" value="Supprimer la catégorie">
+        </form>
+    </fieldset>
+
+    <fieldset>
         <legend>Ajouter un événement</legend>
 
         <form action="actions/evenement/creerEvnt.php" method="post">
@@ -58,6 +108,7 @@
                 <?php
                     $requeteCategorie = $bdd->query("SELECT * FROM $prefixeTable"."categorie");
                     $categories = $requeteCategorie->fetchAll();
+                    $requeteCategorie->closeCursor();
 
                     foreach ($categories as $categorie) 
                     {

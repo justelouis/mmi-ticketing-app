@@ -11,6 +11,8 @@
             "id" => $_GET["id"]
         ]);
         $evnt = $getEvnt->fetch();
+
+        $getEvnt->closeCursor();
     }else
     {
         header("Location: index.php");
@@ -24,8 +26,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$evnt["nom"]?></title>
     <link rel="stylesheet" href="css/styleEvenement.css">
+    <link rel="stylesheet" href="css/styleNavbar.css">
+    <link rel="stylesheet" href="css/styleFooter.css">
 </head>
 <body>
+
+    <?php
+        include("includes/navbar.php");
+    ?>
     <h1><?=$evnt["nom"]?></h1>
     <p><?=$evnt["description"]?></p>
     <p><?=$evnt["date"]?></p>
@@ -64,8 +72,9 @@
                             <label for="lieu">lieu</label>
                             <input type="text" name="lieu" id="lieu" required value=<?=$evnt["lieu"]?>>
 
+                            <input type="hidden" name="placeResa" value=<?= $evnt["placeMax"]-$evnt["placeDispo"]?> >
                             <label for="nbPlace">Nombre de places</label>
-                            <input type="number" name="nbPlace" id="nbPlace" min=1 required value=<?=$evnt["placeMax"]?>>
+                            <input type="number" name="nbPlace" id="nbPlace" min=<?= $evnt["placeMax"]-$evnt["placeDispo"] ?> required value=<?=$evnt["placeMax"]?>>
 
                             <label for="categorie">Categorie</label>
                             <select name="categorie" id="categorie" required>
@@ -125,7 +134,9 @@
             <?php
         }
     ?>
-    <a href="index.php">Revenir a l'accueil</a>
+    <?php
+        include("includes/footer.php");
+    ?>
     <script src="js/scriptEvenement.js"></script>
 </body>
 </html>

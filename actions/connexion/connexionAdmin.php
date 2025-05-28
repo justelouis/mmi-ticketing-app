@@ -12,10 +12,11 @@
         {
             $_SESSION["admin"] = true;
             $_SESSION["auth"] = true;
+            $requete->closeCursor();
             header("Location: ../../admin.php");
-
         }else
         {
+            $requete->closeCursor();    
             header("Location: ../../connexionAdmin.php");
         }
     }else

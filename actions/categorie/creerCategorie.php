@@ -14,6 +14,9 @@
             $insertCateg->execute([
                 'nomCateg' => $nomCategorie
             ]);
+
+            $insertCateg->closeCursor();
+            $checkExiste->closeCursor();
         }else
         {
             header("Location: ../../admin.php?categExiste=true");
