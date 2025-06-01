@@ -7,8 +7,6 @@ if(!empty($_POST))
     $mail = htmlspecialchars($_POST["mail"]);
     $mdp = htmlspecialchars($_POST["mdp"]);
 
-    $checkExiste = $bdd->query("SELECT * FROM $prefixeTable"."utilisateur WHERE email = '$mail' ");
-
     $checkExiste = $bdd->prepare("SELECT * FROM $prefixeTable"."utilisateur WHERE email = :mail");
     $checkExiste->execute([
         "mail" => $mail

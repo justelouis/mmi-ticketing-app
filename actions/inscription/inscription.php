@@ -1,4 +1,4 @@
-<?
+<?php
 
 if(!empty($_POST))
 {
@@ -15,21 +15,24 @@ if(!empty($_POST))
         ]);
         $inscription->closeCursor();
 
-        echo "inscription validé";
-
-        $_SESSION["auth"] = true;
-        $_SESSION["admin"] = false;
-
         
-        unset($_SESSION["mdp"]);
 
-        $getId = $bdd->prepare("SELECT idUtilisateur  FROM $prefixeTable"."utilisateur WHERE email = :email");
-        $getId->execute([
-            "email" => $_SESSION["mail"]
+        $recupInfo = $bdd->prepare("SELECT * FROM $prefixeTable"."utilisateur WHERE email = :mail");
+        $recupInfo->execute([
+            "mail" => $_SESSION['mail']
         ]);
 
-        $_SESSION["id"] = $getId->fetch()["id"];
-        $getId->closeCursor();
+        //variable session
+        session_unset();
+        $infos = $recupInfo->fetch();
+
+        $_SESSION["auth"] = true;
+        $_SESSION["id"] = $infos["idUtilisateur"];
+        $_SESSION["nom"] = $infos["nom"];
+        $_SESSION["prenom"] = $infos["prenom"];
+        $_SESSION["mail"] = $infos["email"];
+        $_SESSION["admin"] = false;
+        $recupInfo->closeCursor();
     }else
     {
         if(isset($_SESSION["inscripTent"]))
@@ -61,7 +64,7 @@ if(!empty($_POST))
     <title>Connexion réussi</title>
 </head>
 <body>
-    <p>Bonjour <?=$_SESSION["prenom"]?>, vous êtes inscrit</p>
+    <p>Bonjour <?=$_SESSION["id"]?>, vous êtes inscrit</p>
 
     <a href="../../index.php">Retour a l'accueil</a>
 </body>

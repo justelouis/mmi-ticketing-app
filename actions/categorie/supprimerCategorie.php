@@ -5,12 +5,12 @@ if(!empty($_POST))
 {
     $idCategorie = $_POST["categorieASupprimer"];
 
-    $changeEvntCategorie = $bdd->prepare("UPDATE evenement SET idCategorie = 1 WHERE idCategorie = :idCategorie");
+    $changeEvntCategorie = $bdd->prepare("UPDATE $prefixeTable"."evenement SET idCategorie = 1 WHERE idCategorie = :idCategorie");
     $changeEvntCategorie->execute([
         "idCategorie" => $idCategorie
     ]);
     
-    $deleteCategorie = $bdd->prepare("DELETE FROM categorie WHERE idCategorie = :idCategorie");
+    $deleteCategorie = $bdd->prepare("DELETE FROM $prefixeTable"."categorie WHERE idCategorie = :idCategorie");
     $deleteCategorie->execute([
         "idCategorie" => $idCategorie
     ]);
