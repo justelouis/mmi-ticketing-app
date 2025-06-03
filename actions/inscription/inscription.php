@@ -64,7 +64,7 @@ if(!empty($_POST))
     <title>Connexion réussi</title>
 </head>
 <body>
-    <p>Bonjour <?=$_SESSION["id"]?>, vous êtes inscrit</p>
+    <p>Bonjour <?=$_SESSION["prenom"]?>, vous êtes inscrit</p>
 
     <a href="../../index.php">Retour a l'accueil</a>
 </body>
