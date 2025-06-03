@@ -13,8 +13,14 @@ h1
 .evnt
 {
     border: 1px solid black;
-    height: 20vh;
+    height: 25vh;
     background-color: gray;
+}
+.evnt p 
+{
+    max-height: 70%;
+    overflow-y: scroll;
+    margin: 30px;
 }
 .evnt:hover
 {

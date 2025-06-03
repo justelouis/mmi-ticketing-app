@@ -49,7 +49,7 @@
             {
                 $sqlWhere = "";
             }
-            $requeteEvnt = $bdd->query("SELECT * FROM $prefixeTable"."evenement".$sqlWhere);
+            $requeteEvnt = $bdd->query("SELECT * FROM $prefixeTable"."evenement".$sqlWhere." ORDER BY date ASC");
             if($requeteEvnt->rowCount() == 0) //verif si pas d'evnt
             {
                 ?>
@@ -68,8 +68,8 @@
                             <div>
                                 <h3><?=$evnt["nom"]?></h3>
                                 <p><?=$evnt["description"]?></p>
-                                <p><strong>Date :</strong> <?=$evnt["date"]?></p>
-                                <p><strong>Lieu :</strong> <?=$evnt["lieu"]?></p>
+                                <span><strong>Date :</strong> <?=$evnt["date"]?></span>
+                                <span><strong>Lieu :</strong> <?=$evnt["lieu"]?></span>
                             </div>
                         </a>
                     </div>

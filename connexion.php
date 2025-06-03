@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connection</title>
+    <link rel="stylesheet" href="css/styleConnexion.css">
+    <title>Connexion</title>
 </head>
 <body>
     <a href="connexionAdmin.php">Connexion admin</a>
@@ -15,6 +16,7 @@
 
             <label for="mdp">Mot de passe</label>
             <input type="password" name="mdp" id="mdp" required>
+            <img src="imgs/eyeClose.jpg" alt="oeil fermé, mot de passe caché" id="eye" onclick="SwitchVisibilityPw()">
 
             <input type="submit" value="Se connecter">
         </form>
@@ -38,5 +40,6 @@
         }
 
     ?>
+    <script src="js/scriptConnexion.js"></script>
 </body>
 </html>

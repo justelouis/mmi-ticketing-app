@@ -26,10 +26,17 @@ function VerifMdp(evt)
 }
 
 
-function Moi()
+function SwitchVisibilityPw()
 {
-    prenom = "Louis";
-    nom = "Cadix";
-    competences = ["Dev web", "Crea Numerique"];
-    job = ["Etudiant", "Developpeur"];
+    const passwordField = document.getElementById("mdp");
+
+    if(passwordField.type == "password")
+    {
+        passwordField.type = "text";
+        document.getElementById("eye").src = "imgs/eyeOpen.jpg";
+    }else
+    {
+        passwordField.type = "password";
+        document.getElementById("eye").src = "imgs/eyeClose.jpg";
+    }
 }

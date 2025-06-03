@@ -40,6 +40,7 @@
 
             <label for="mdp">password</label>
             <input type="password" name="mdp" id="mdp" required oninput="TestRobustesse(this.value)">
+            <img src="imgs/eyeClose.jpg" alt="oeil fermé, mot de passe caché" id="eye" onclick="SwitchVisibilityPw()">
             <ul id="testRobustesse">
                 <li class="invalide">8 caractères</li>
                 <li class="invalide">1 Majuscule</li>
