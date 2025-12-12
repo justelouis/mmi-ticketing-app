@@ -2,7 +2,7 @@
 
 $prefixeTable = "";
 try {
-    $bdd = new PDO("mysql:host=localhost;dbname=sae203;charset=utf8", "root", "");
+    $bdd = new PDO("mysql:host=localhost;dbname=sae203;charset=utf8", "root", "root");
     session_start();
 }catch (PDOException $e) 
 { 
