@@ -1,6 +1,6 @@
 # 🎟️ Simple Ticketing System Website
 
-A functional web application for event ticketing, built as a practical project during my 2nd year of **BUT MMI** (IUT de Rouen). 
+A functional web application for event ticketing, built as a practical project during my 1st year of **BUT MMI** (IUT de Rouen). 
 
 > **Note:** The core objective of this project was to master web development logic, database interactions, and overall functionality. As the emphasis was placed entirely on architecture and dynamic features, the user interface remains minimal.
 
@@ -56,6 +56,6 @@ You can test the application using either the pre-configured demo account or by 
 
 ## 🎓 Academic Context
 
-- **Course:** BUT MMI (Métiers du Multimédia et de l'Internet) – 2nd Year
+- **Course:** BUT MMI (Métiers du Multimédia et de l'Internet) – 1st Year
 - **Institution:** IUT de Rouen
 - **Objective:** Build a fully functional web app focusing on back-end architecture, SQL operations, and user authentication logic.
