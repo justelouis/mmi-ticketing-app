@@ -23,7 +23,7 @@ if(isset($_SESSION["mail"]))
         $headers
     ))
     {
-
+        $_SESSION["code"] = "1234";
     }else
     {
         echo"Message non envoyé";
